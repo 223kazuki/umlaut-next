@@ -1,0 +1,8 @@
+{:paths ["src" "resources"]
+ :deps  {org.clojure/clojure {:mvn/version "1.10.3"}
+         metosin/spec-tools  {:mvn/version "0.9.2"}
+         camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.0"}
+         instaparse/instaparse               {:mvn/version "1.4.7"}}
+ :aliases {:test
+           {:extra-deps  {org.clojure/test.check {:mvn/version "1.0.0"}}
+            :extra-paths ["test"]}}}

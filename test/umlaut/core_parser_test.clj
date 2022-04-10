@@ -3,7 +3,6 @@
             [umlaut.core :refer :all]
             [umlaut.parser :refer :all]
             [clojure.data :as data]))
-(use '[clojure.pprint :only [pprint]])
 
 (def fixture (read-string (slurp "test/fixtures/person/umlaut.fixture")))
 
@@ -14,5 +13,3 @@
     (is (and
          (nil? (first diff))
          (nil? (second diff))))))
-
-(run-all-tests)
