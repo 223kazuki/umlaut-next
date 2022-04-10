@@ -17,18 +17,17 @@ pom.xml.asc
 .lein-plugins/
 .lein-failures
 .nrepl-port
+.cpcache
 
 ### IDE
 .idea/
 .projectile
 *.iml
+*.~undo-tree~
 
 ### Mercurial
 .hgignore
 .hg/
 
-
 ### OS
 .DS_Store
-
-
