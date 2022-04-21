@@ -2,6 +2,7 @@
   (:require [clojure.java.io :as io]
             [clojure.string :refer [split]]
             [instaparse.core :as insta]
+            [clj-antlr.core :as antlr]
             [umlaut.utils :refer [seek
                                   type-interface-or-enum?
                                   diagram?]]))
@@ -9,6 +10,10 @@
 (def parser
   (insta/parser
    (io/resource "umlaut.bnf")))
+
+(def antlr-parser
+  (antlr/parser
+   (.getPath (io/resource "umlaut.g4"))))
 
 (defn- normalize-arity
   "Formats :arity according to the number of args"
@@ -147,9 +152,22 @@
     {:nodes (zipmap (id-list (filter type-interface-or-enum? node-list)) (filter type-interface-or-enum? node-list))
      :diagrams (zipmap (id-list (filter diagram? node-list)) (filter diagram? node-list))}))
 
+#_(defn parse
+    [content]
+    (let [parsed (parser content)]
+      (when (insta/get-failure parsed)
+        (throw (Exception. (with-out-str (println (insta/get-failure parsed))))))
+      (transformer parsed)))
+
 (defn parse
   [content]
-  (let [parsed (parser content)]
-    (when (insta/get-failure parsed)
-      (throw (Exception. (with-out-str (println (insta/get-failure parsed))))))
+  (let [parsed (antlr-parser content)]
     (transformer parsed)))
+
+
+(comment
+
+  (parser (slurp "test/fixtures/person/profession.umlaut"))
+  (antlr-parser (slurp "test/fixtures/person/profession.umlaut"))
+
+  )
